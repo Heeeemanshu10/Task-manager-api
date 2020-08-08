@@ -1,7 +1,6 @@
 const express = require('express')
 const User = require('../models/user')
 const auth = require('../middleware/auth')
-const { cornsilk } = require('color-name')
 const router = express.Router()
 
 router.post('/users',async (req,res) => {
@@ -54,20 +53,9 @@ router.post('/users/logoutAll', auth , async (req,res) => {
         res.send(req.user) 
     })
     
-    router.get('/users/:id',async (req,res) => {
-       const _id = req.params.id
-       try {
-       const user = await User.findById(_id)
-       if(!user) {
-           res.status(404).send();
-       }
-       res.send(user)
-       } catch(error) {
-          res.status(404).send(error)
-       }
-    })
     
-    router.patch('/users/:id', async(req,res) => {
+    
+    router.patch('/users/me', auth ,async(req,res) => {
        const updates = Object.keys(req.body)
        const allowedUpdates = ['name','email','password','age']
        const isValidOperation = updates.every((updates) =>  allowedUpdates.includes(updates))  
@@ -75,31 +63,22 @@ router.post('/users/logoutAll', auth , async (req,res) => {
            res.status(404).send({ error: "Does not belong to the category" })
        } 
        
-        const _id = req.params.id
+        
         try {
-               const user = await User.findById(_id)
-               updates.forEach((update) => user[update] = req.body[update])
-               await user.save()
-
-            // const updatedUser = await User.findByIdAndUpdate(_id, req.body, { new: true, runValidators: true })
-            if(!updatedUser) {
-                res.status(404).send()
-            }
-            res.send(updatedUser)
+               
+               updates.forEach((update) => req.user[update] = req.body[update])
+               await req.user.save()
+            res.send(req.user)
         } catch (error) {
             res.status(404).send()
         }
     })     
     
-    router.delete('/users/:id',async (req,res) => {
-        const _id = req.params.id
+    router.delete('/users/me',auth ,async (req,res) => {
+        
         try {
-            const user = await User.findByIdAndDelete(_id)
-    
-            if(!user){
-                res.status(404).send()
-            }
-            res.send(user)
+            await req.user.remove()
+            res.send(req.user)
         } catch (error) {
             res.status(404).send()
         }

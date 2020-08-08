@@ -3,20 +3,27 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Heeeemanshu10/Task-manager-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Heeeemanshu10/Task-manager-api/issues"
+  },
+  "homepage": "https://github.com/Heeeemanshu10/Task-manager-api#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^3.5.9",
-    "mongoose": "^5.9.27",
-    "nodemon": "^2.0.4",
+    "middleware": "^1.0.0",
+    "mongoose": "^5.9.28",
+    "multer": "^1.4.2",
     "validator": "^13.1.1"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  }
 }

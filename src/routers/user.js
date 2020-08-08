@@ -1,6 +1,7 @@
 const express = require('express')
 const User = require('../models/user')
 const auth = require('../middleware/auth')
+const { cornsilk } = require('color-name')
 const router = express.Router()
 
 router.post('/users',async (req,res) => {
@@ -19,8 +20,8 @@ router.post('/users/login', async (req,res) => {
     try{
     const user = await User.findByCredentials(req.body.email , req.body.password)
     const token = await user.generateAuthToken()
-    res.send({ user , token})
-    res.send(user)
+     res.send({ user , token })
+    
     } catch(e) {
         res.status(404).send()
     }
